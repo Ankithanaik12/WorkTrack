@@ -1,0 +1,298 @@
+:root {
+  --deep-space: #0f172a;
+  --electric-violet: #8b5cf6;
+  --seafoam-glow: #22c55e;
+  --white: #ffffff;
+  --gold: #fbbf24;
+  --beige-bar: #fef3c7;
+}
+
+body {
+  margin: 0;
+  background-color: var(--deep-space);
+  color: var(--white);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  display: flex;
+  justify-content: center;
+  padding-top: 50px;
+}
+
+.app-container {
+  width: 90%;
+  max-width: 800px;
+  text-align: center;
+}
+
+/* --- TITLE & TAGLINE --- */
+h1 {
+  background: linear-gradient(to bottom, #c084fc, #8b5cf6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  
+  font-size: 5rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 8px;
+  margin: 20px 0 10px 0;
+  text-align: center;
+  
+  /* --- THE FIX --- */
+  padding-right: 30px;  /* Pushes the crop zone past the K */
+  display: block;
+  width: 100%;
+  overflow: visible;    /* Ensures nothing gets cut off */
+  filter: drop-shadow(0 0 15px rgba(139, 92, 246, 0.4));
+}
+
+/* 1. THE TAGLINE WITH ANIMATION */
+p i center {
+  color: var(--gold);
+  font-size: 1.4rem;
+  letter-spacing: 2px;
+  margin-top: 10px;
+  margin-bottom: 40px;
+  display: block;
+  font-weight: 500;
+  text-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
+
+  /* Animation Logic */
+  position: relative; /* Allows it to move */
+  animation: slideLeftRight 4s ease-in-out infinite;
+}
+
+/* 2. THE KEYFRAMES LOGIC */
+@keyframes slideLeftRight {
+  0% {
+    transform: translateX(-20px); /* Start slightly left */
+  }
+  50% {
+    transform: translateX(20px);  /* Move to the right */
+  }
+  100% {
+    transform: translateX(-20px); /* Return to left */
+  }
+}
+
+/* Keep your emojis exactly the same */
+p i center::before { content: "🚀 "; }
+p i center::after { content: " ✨"; }
+
+/* --- FORM BOX --- */
+.task-form {
+  background: rgba(30, 41, 59, 0.4);
+  padding: 40px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 30px;
+}
+
+#inp {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+input[type="text"] {
+  flex: 3;
+  padding: 20px 25px;
+  background: #0f172a;
+  border: 1.5px solid #334155;
+  border-radius: 16px;
+  color: white;
+  font-size: 1.1rem;
+  outline: none;
+}
+
+button[type="submit"] {
+  flex: 1;
+  padding: 20px;
+  background-color: var(--electric-violet);
+  color: white;
+  border: none;
+  border-radius: 16px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+#btn {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+select {
+  padding: 12px 25px;
+  background-color: #1e293b;
+  color: white !important;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* --- TASK LIST (LARGE ITEMS) --- */
+.task-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 40px;
+}
+
+.task-list li {
+  background: rgba(30, 41, 59, 0.3);
+  margin-bottom: 25px;
+  padding: 35px 40px; /* This makes the React task much larger */
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-left: 12px solid var(--electric-violet);
+  font-size: 1.4rem;
+}
+
+.task-list li.completed {
+  border-left-color: var(--seafoam-glow);
+}
+
+.task-list li small {
+  font-size: 1.1rem;
+  color: #94a3b8;
+  margin-left: 10px;
+}
+
+/* Task Buttons (Undo / Delete) */
+.task-list button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  background: #1e293b;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-weight: 600;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+/* --- PROGRESS BAR (GREEN LINE) --- */
+
+
+
+
+.progress-tracker {
+
+  margin-top: 16px;
+
+}
+
+
+
+.progress-bar {
+
+  height: 8px;
+
+  background: #eeeeee;
+
+  border-radius: 999px;
+
+  overflow: hidden;
+
+}
+
+
+
+.progress {
+
+  height: 100%;
+
+  background: #16a34a;
+
+}
+
+
+
+
+/* --- CLEAR ALL BUTTON --- */
+.clear-btn {
+  margin-top: 30px;
+  background: #dc2626;
+  color: #ffffff;
+  border: 0;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+} 
+
+/* --- FEATURE: INTERACTIVE HOVER CARDS --- */
+
+.task-list li {
+  /* This ensures the movement is smooth and not jumpy */
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), 
+              box-shadow 0.3s ease, 
+              background 0.3s ease,
+              border-left-width 0.2s ease;
+  cursor: pointer;
+}
+
+.task-list li:hover {
+  /* 1. The "Lift" effect (moves 8px up instead of 5px for more impact) */
+  transform: translateY(-8px) scale(1.01);
+
+  /* 2. The "Glow" effect - matches your violet theme */
+  background: rgba(30, 41, 59, 0.7);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 
+              0 0 15px rgba(139, 92, 246, 0.2);
+
+  /* 3. The "Thick Border" effect */
+  border-left-width: 18px; /* Makes the side bar pop out on hover */
+}
+
+/* If the task is completed, make the hover glow green instead of violet */
+.task-list li.completed:hover {
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 
+              0 0 15px rgba(34, 197, 94, 0.2);
+  border-left-color: #22c55e;
+}
+
+/* Make buttons inside the card react to the hover too */
+.task-list li:hover button {
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+
+
+.task-list li.completed {
+  background: linear-gradient(110deg, rgba(34, 197, 94, 0.1) 45%, rgba(34, 197, 94, 0.2) 50%, rgba(34, 197, 94, 0.1) 55%);
+  background-size: 200% 100%;
+  animation: shine 3s infinite linear;
+  border-left-color: var(--seafoam-glow);
+  opacity: 0.8;
+}
+
+@keyframes shine {
+  to { background-position: -200% 0; }
+}
+
+button[type="submit"]:hover {
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.6);
+  transform: scale(1.02);
+  transition: all 0.2s ease;
+}
+
+button[type="submit"]:active {
+  transform: scale(0.95); /* Makes it feel like a real physical button */
+}
+
+.task-list li {
+  animation: slideIn 0.4s ease-out forwards;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
