@@ -5,16 +5,16 @@ import ProgressTracker from './Components/ProgressTracker'
 
 
 export default function App() {
-  const[tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState([]);
 
 
-  useEffect(()=> {
+  useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks))
   });
 
 
   const addTask = (task) => {
-    setTasks([...tasks,task]);
+    setTasks([...tasks, task]);
   }
 
 
@@ -39,16 +39,16 @@ export default function App() {
     <div>
       <h1>WORKTRACK</h1>
       <p><i><center>Manage Tasks with Ease</center></i></p>
-      <Taskform addTask = {addTask}/>
-      <TaskList tasks = {tasks}
-      updateTask = {updateTask}
-      deleteTask = {deleteTask}/>
-      <ProgressTracker tasks = {tasks}/>
+      <Taskform addTask={addTask} />
+      <TaskList tasks={tasks}
+        updateTask={updateTask}
+        deleteTask={deleteTask} />
+      <ProgressTracker tasks={tasks} />
 
 
-    {tasks.length>0 && 
-    (<button onClick= {clearTasks} className='clear-btn'> Clear All Tasks</button>)}
-      
+      {tasks.length > 0 &&
+        (<button onClick={clearTasks} className='clear-btn'> Clear All Tasks</button>)}
+
     </div>
   )
 }

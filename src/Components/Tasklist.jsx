@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import emailjs from '@emailjs/browser';
 
-export default function TaskList({ tasks, updateTask, deleteTask }) {
+export default function Tasklist({ tasks, updateTask, deleteTask }) {
   const processingEmails = useRef(new Set());
 
   const toggleComplete = (index) => {
