@@ -1,6 +1,15 @@
 import React, { useEffect, useRef } from "react";
 import emailjs from '@emailjs/browser';
 
+/** Parse `YYYY-MM-DD` as local calendar date (avoids UTC offset bugs). */
+function parseLocalDate(dateStr) {
+  if (!dateStr) return null;
+  const match = String(dateStr).match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (!match) return new Date(dateStr);
+  const [, y, m, d] = match.map(Number);
+  return new Date(y, m - 1, d);
+}
+
 export default function Tasklist({ tasks, updateTask, deleteTask }) {
   const processingEmails = useRef(new Set());
 
@@ -11,18 +20,32 @@ export default function Tasklist({ tasks, updateTask, deleteTask }) {
 
   const isStartActive = (task) => {
     if (!task.startDate || task.completed || task.startEmailSent) return false;
+
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    const start = new Date(task.startDate);
+
+    const start = parseLocalDate(task.startDate);
+    if (!start) return false;
     start.setHours(0, 0, 0, 0);
-    return today.getTime() >= start.getTime();
+
+    const startActive = today.getTime() >= start.getTime();
+
+    console.log('[WorkTrack][Date]', {
+      today: today.toDateString(),
+      startDate: task.startDate,
+      parsedStartDate: start.toDateString(),
+      startActive,
+    });
+
+    return startActive;
   };
 
   const isReminderActive = (task) => {
     if (task.completed || task.reminderEnabled === false || !task.endDate) return false;
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    const end = new Date(task.endDate);
+    const end = parseLocalDate(task.endDate);
+    if (!end) return false;
     end.setHours(0, 0, 0, 0);
 
     const diffTime = end.getTime() - today.getTime();
@@ -65,7 +88,7 @@ export default function Tasklist({ tasks, updateTask, deleteTask }) {
         processingEmails.current.add(`${index}-end`);
         emailjs.send(
           "service_w6644z9",
-          "template_qx80dsr",
+          "template_j688fn1",
           {
             task_name: task.text,
             due_date: task.endDate,
